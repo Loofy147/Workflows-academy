@@ -1,39 +1,145 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import { AuthProvider } from "./contexts/AuthContext";
 
+// Public Pages
+import LandingPage from "./pages/public/LandingPage";
+import PricingPage from "./pages/public/PricingPage";
+import DocsPage from "./pages/public/DocsPage";
+import AboutPage from "./pages/public/AboutPage";
+
+// Auth Pages
+import SignUpPage from "./pages/auth/SignUpPage";
+import LoginPage from "./pages/auth/LoginPage";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+
+// Authenticated Pages
+import Dashboard from "./pages/authenticated/Dashboard";
+import WorkflowsList from "./pages/authenticated/WorkflowsList";
+import WorkflowDetail from "./pages/authenticated/WorkflowDetail";
+import WorkflowBuilder from "./pages/authenticated/WorkflowBuilder";
+import WorkflowExecution from "./pages/authenticated/WorkflowExecution";
+import WorkflowResults from "./pages/authenticated/WorkflowResults";
+import TemplateMarketplace from "./pages/authenticated/TemplateMarketplace";
+import TemplateDetail from "./pages/authenticated/TemplateDetail";
+import MyTemplates from "./pages/authenticated/MyTemplates";
+import Settings from "./pages/authenticated/Settings";
+import Billing from "./pages/authenticated/Billing";
+import ApiKeys from "./pages/authenticated/ApiKeys";
+
+// Admin Pages
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import UserManagement from "./pages/admin/UserManagement";
+import TemplateManagement from "./pages/admin/TemplateManagement";
+import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminSettings from "./pages/admin/AdminSettings";
+
+// 404 Page
+import NotFound from "./pages/NotFound";
+
+// Protected Route Component
+function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <div className="text-center">
+          <div className="w-12 h-12 rounded-full border-4 border-slate-700 border-t-cyan-500 animate-spin mx-auto mb-4" />
+          <p className="text-slate-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
+  return <Component />;
+}
+
+// Admin Protected Route Component
+function AdminRoute({ component: Component }: { component: React.ComponentType }) {
+  const { isAuthenticated, user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <div className="text-center">
+          <div className="w-12 h-12 rounded-full border-4 border-slate-700 border-t-cyan-500 animate-spin mx-auto mb-4" />
+          <p className="text-slate-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated || user?.role !== "admin") {
+    return <NotFound />;
+  }
+
+  return <Component />;
+}
 
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
+      {/* Public Routes */}
+      <Route path="/" component={LandingPage} />
+      <Route path="/pricing" component={PricingPage} />
+      <Route path="/docs" component={DocsPage} />
+      <Route path="/about" component={AboutPage} />
+
+      {/* Auth Routes */}
+      <Route path="/auth/signup" component={SignUpPage} />
+      <Route path="/auth/login" component={LoginPage} />
+      <Route path="/auth/forgot-password" component={ForgotPasswordPage} />
+
+      {/* Authenticated Routes */}
+      <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} />} />
+      <Route path="/workflows" component={() => <ProtectedRoute component={WorkflowsList} />} />
+      <Route path="/workflows/:id" component={() => <ProtectedRoute component={WorkflowDetail} />} />
+      <Route path="/workflows/builder/new" component={() => <ProtectedRoute component={WorkflowBuilder} />} />
+      <Route path="/workflows/:id/edit" component={() => <ProtectedRoute component={WorkflowBuilder} />} />
+      <Route path="/workflows/:id/run" component={() => <ProtectedRoute component={WorkflowExecution} />} />
+      <Route path="/workflows/:id/results/:executionId" component={() => <ProtectedRoute component={WorkflowResults} />} />
+      <Route path="/templates" component={() => <ProtectedRoute component={TemplateMarketplace} />} />
+      <Route path="/templates/:id" component={() => <ProtectedRoute component={TemplateDetail} />} />
+      <Route path="/my-templates" component={() => <ProtectedRoute component={MyTemplates} />} />
+      <Route path="/settings" component={() => <ProtectedRoute component={Settings} />} />
+      <Route path="/billing" component={() => <ProtectedRoute component={Billing} />} />
+      <Route path="/api-keys" component={() => <ProtectedRoute component={ApiKeys} />} />
+
+      {/* Admin Routes */}
+      <Route path="/admin" component={() => <AdminRoute component={AdminDashboard} />} />
+      <Route path="/admin/users" component={() => <AdminRoute component={UserManagement} />} />
+      <Route path="/admin/templates" component={() => <AdminRoute component={TemplateManagement} />} />
+      <Route path="/admin/analytics" component={() => <AdminRoute component={AdminAnalytics} />} />
+      <Route path="/admin/settings" component={() => <AdminRoute component={AdminSettings} />} />
+
+      {/* 404 */}
+      <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
+// Import useAuth hook
+import { useAuth } from "./contexts/AuthContext";
 
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+      <ThemeProvider defaultTheme="dark">
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </AuthProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
