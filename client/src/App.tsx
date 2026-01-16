@@ -23,7 +23,9 @@ import WorkflowDetail from "./pages/authenticated/WorkflowDetail";
 import WorkflowBuilder from "./pages/authenticated/WorkflowBuilder";
 import WorkflowExecution from "./pages/authenticated/WorkflowExecution";
 import WorkflowResults from "./pages/authenticated/WorkflowResults";
-import TemplateMarketplace from "./pages/authenticated/TemplateMarketplace";
+import Templates from "./pages/authenticated/Templates";
+import ExecutionMonitor from "./pages/authenticated/ExecutionMonitor";
+import CreatorPayouts from "./pages/authenticated/CreatorPayouts";
 import TemplateDetail from "./pages/authenticated/TemplateDetail";
 import MyTemplates from "./pages/authenticated/MyTemplates";
 import Settings from "./pages/authenticated/Settings";
@@ -106,9 +108,11 @@ function Router() {
       <Route path="/workflows/:id/edit" component={() => <ProtectedRoute component={WorkflowBuilder} />} />
       <Route path="/workflows/:id/run" component={() => <ProtectedRoute component={WorkflowExecution} />} />
       <Route path="/workflows/:id/results/:executionId" component={() => <ProtectedRoute component={WorkflowResults} />} />
-      <Route path="/templates" component={() => <ProtectedRoute component={TemplateMarketplace} />} />
+      <Route path="/templates" component={() => <ProtectedRoute component={Templates} />} />
       <Route path="/templates/:id" component={() => <ProtectedRoute component={TemplateDetail} />} />
       <Route path="/my-templates" component={() => <ProtectedRoute component={MyTemplates} />} />
+      <Route path="/execution/:executionId" component={() => <ProtectedRoute component={ExecutionMonitor} />} />
+      <Route path="/creator/payouts" component={() => <ProtectedRoute component={CreatorPayouts} />} />
       <Route path="/settings" component={() => <ProtectedRoute component={Settings} />} />
       <Route path="/billing" component={() => <ProtectedRoute component={Billing} />} />
       <Route path="/api-keys" component={() => <ProtectedRoute component={ApiKeys} />} />
