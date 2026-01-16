@@ -26,6 +26,9 @@ import WorkflowResults from "./pages/authenticated/WorkflowResults";
 import Templates from "./pages/authenticated/Templates";
 import ExecutionMonitor from "./pages/authenticated/ExecutionMonitor";
 import CreatorPayouts from "./pages/authenticated/CreatorPayouts";
+import PublishTemplate from "./pages/authenticated/PublishTemplate";
+import WorkflowAnalytics from "./pages/authenticated/WorkflowAnalytics";
+import TeamCollaboration from "./pages/authenticated/TeamCollaboration";
 import TemplateDetail from "./pages/authenticated/TemplateDetail";
 import MyTemplates from "./pages/authenticated/MyTemplates";
 import Settings from "./pages/authenticated/Settings";
@@ -34,6 +37,7 @@ import ApiKeys from "./pages/authenticated/ApiKeys";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminUserManagement from "./pages/admin/AdminUserManagement";
 import UserManagement from "./pages/admin/UserManagement";
 import TemplateManagement from "./pages/admin/TemplateManagement";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
@@ -113,13 +117,16 @@ function Router() {
       <Route path="/my-templates" component={() => <ProtectedRoute component={MyTemplates} />} />
       <Route path="/execution/:executionId" component={() => <ProtectedRoute component={ExecutionMonitor} />} />
       <Route path="/creator/payouts" component={() => <ProtectedRoute component={CreatorPayouts} />} />
+      <Route path="/templates/publish" component={() => <ProtectedRoute component={PublishTemplate} />} />
+      <Route path="/analytics" component={() => <ProtectedRoute component={WorkflowAnalytics} />} />
+      <Route path="/team" component={() => <ProtectedRoute component={TeamCollaboration} />} />
       <Route path="/settings" component={() => <ProtectedRoute component={Settings} />} />
       <Route path="/billing" component={() => <ProtectedRoute component={Billing} />} />
       <Route path="/api-keys" component={() => <ProtectedRoute component={ApiKeys} />} />
 
       {/* Admin Routes */}
       <Route path="/admin" component={() => <AdminRoute component={AdminDashboard} />} />
-      <Route path="/admin/users" component={() => <AdminRoute component={UserManagement} />} />
+      <Route path="/admin/users" component={() => <AdminRoute component={AdminUserManagement} />} />
       <Route path="/admin/templates" component={() => <AdminRoute component={TemplateManagement} />} />
       <Route path="/admin/analytics" component={() => <AdminRoute component={AdminAnalytics} />} />
       <Route path="/admin/settings" component={() => <AdminRoute component={AdminSettings} />} />
