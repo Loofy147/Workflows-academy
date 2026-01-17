@@ -46,6 +46,9 @@ import WorkflowVersions from "./pages/authenticated/WorkflowVersions";
 import AIWorkflowBuilder from "./pages/authenticated/AIWorkflowBuilder";
 import RealtimeExecutionMonitor from "./pages/authenticated/RealtimeExecutionMonitor";
 import TemplateLibrary from "./pages/authenticated/TemplateLibrary";
+import WorkflowScheduler from "./pages/authenticated/WorkflowScheduler";
+import CostAnalytics from "./pages/authenticated/CostAnalytics";
+import MarketplaceMonetization from "./pages/authenticated/MarketplaceMonetization";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -147,6 +150,9 @@ function Router() {
       <Route path="/ai-builder" component={() => <ProtectedRoute component={AIWorkflowBuilder} />} />
       <Route path="/executions/:id/monitor" component={() => <ProtectedRoute component={RealtimeExecutionMonitor} />} />
       <Route path="/template-library" component={() => <ProtectedRoute component={TemplateLibrary} />} />
+      <Route path="/scheduler" component={() => <ProtectedRoute component={WorkflowScheduler} />} />
+      <Route path="/cost-analytics" component={() => <ProtectedRoute component={CostAnalytics} />} />
+      <Route path="/monetization" component={() => <ProtectedRoute component={MarketplaceMonetization} />} />
 
       {/* Admin Routes */}
       <Route path="/admin" component={() => <AdminRoute component={AdminDashboard} />} />
