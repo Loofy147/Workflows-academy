@@ -34,6 +34,15 @@ import MyTemplates from "./pages/authenticated/MyTemplates";
 import Settings from "./pages/authenticated/Settings";
 import Billing from "./pages/authenticated/Billing";
 import ApiKeys from "./pages/authenticated/ApiKeys";
+import UserProfile from "./pages/authenticated/UserProfile";
+import Notifications from "./pages/authenticated/Notifications";
+import AccountSettings from "./pages/authenticated/AccountSettings";
+import HelpCenter from "./pages/authenticated/HelpCenter";
+import Webhooks from "./pages/authenticated/Webhooks";
+import ActivityTimeline from "./pages/authenticated/ActivityTimeline";
+import IntegrationMarketplace from "./pages/authenticated/IntegrationMarketplace";
+import SearchPage from "./pages/authenticated/Search";
+import WorkflowVersions from "./pages/authenticated/WorkflowVersions";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -123,6 +132,15 @@ function Router() {
       <Route path="/settings" component={() => <ProtectedRoute component={Settings} />} />
       <Route path="/billing" component={() => <ProtectedRoute component={Billing} />} />
       <Route path="/api-keys" component={() => <ProtectedRoute component={ApiKeys} />} />
+      <Route path="/profile" component={() => <ProtectedRoute component={UserProfile} />} />
+      <Route path="/notifications" component={() => <ProtectedRoute component={Notifications} />} />
+      <Route path="/account-settings" component={() => <ProtectedRoute component={AccountSettings} />} />
+      <Route path="/help" component={() => <ProtectedRoute component={HelpCenter} />} />
+      <Route path="/webhooks" component={() => <ProtectedRoute component={Webhooks} />} />
+      <Route path="/activity" component={() => <ProtectedRoute component={ActivityTimeline} />} />
+      <Route path="/integrations" component={() => <ProtectedRoute component={IntegrationMarketplace} />} />
+      <Route path="/search" component={() => <ProtectedRoute component={SearchPage} />} />
+      <Route path="/workflows/:id/versions" component={() => <ProtectedRoute component={WorkflowVersions} />} />
 
       {/* Admin Routes */}
       <Route path="/admin" component={() => <AdminRoute component={AdminDashboard} />} />
