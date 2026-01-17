@@ -43,6 +43,9 @@ import ActivityTimeline from "./pages/authenticated/ActivityTimeline";
 import IntegrationMarketplace from "./pages/authenticated/IntegrationMarketplace";
 import SearchPage from "./pages/authenticated/Search";
 import WorkflowVersions from "./pages/authenticated/WorkflowVersions";
+import AIWorkflowBuilder from "./pages/authenticated/AIWorkflowBuilder";
+import RealtimeExecutionMonitor from "./pages/authenticated/RealtimeExecutionMonitor";
+import TemplateLibrary from "./pages/authenticated/TemplateLibrary";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -141,6 +144,9 @@ function Router() {
       <Route path="/integrations" component={() => <ProtectedRoute component={IntegrationMarketplace} />} />
       <Route path="/search" component={() => <ProtectedRoute component={SearchPage} />} />
       <Route path="/workflows/:id/versions" component={() => <ProtectedRoute component={WorkflowVersions} />} />
+      <Route path="/ai-builder" component={() => <ProtectedRoute component={AIWorkflowBuilder} />} />
+      <Route path="/executions/:id/monitor" component={() => <ProtectedRoute component={RealtimeExecutionMonitor} />} />
+      <Route path="/template-library" component={() => <ProtectedRoute component={TemplateLibrary} />} />
 
       {/* Admin Routes */}
       <Route path="/admin" component={() => <AdminRoute component={AdminDashboard} />} />
