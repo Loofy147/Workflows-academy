@@ -1,9 +1,10 @@
-import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
+import { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { Toaster } from "@/components/ui/sonner";
 
 // Public Pages
 import LandingPage from "./pages/public/LandingPage";
@@ -83,6 +84,35 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
   return <Component />;
 }
 
+// Auth Route Component - redirects authenticated users to dashboard
+function AuthRoute({ component: Component }: { component: React.ComponentType }) {
+  const { isAuthenticated, isLoading } = useAuth();
+  const [, navigate] = useLocation();
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, isLoading, navigate]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <div className="text-center">
+          <div className="w-12 h-12 rounded-full border-4 border-slate-700 border-t-cyan-500 animate-spin mx-auto mb-4" />
+          <p className="text-slate-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return null;
+  }
+
+  return <Component />;
+}
+
 // Admin Protected Route Component
 function AdminRoute({ component: Component }: { component: React.ComponentType }) {
   const { isAuthenticated, user, isLoading } = useAuth();
@@ -115,9 +145,11 @@ function Router() {
       <Route path="/about" component={AboutPage} />
 
       {/* Auth Routes */}
-      <Route path="/auth/signup" component={SignUpPage} />
-      <Route path="/auth/login" component={LoginPage} />
+      <Route path="/auth/signup" component={() => <AuthRoute component={SignUpPage} />} />
+      <Route path="/auth/login" component={() => <AuthRoute component={LoginPage} />} />
       <Route path="/auth/forgot-password" component={ForgotPasswordPage} />
+      <Route path="/signup" component={() => <AuthRoute component={SignUpPage} />} />
+      <Route path="/login" component={() => <AuthRoute component={LoginPage} />} />
 
       {/* Authenticated Routes */}
       <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} />} />
@@ -167,9 +199,6 @@ function Router() {
     </Switch>
   );
 }
-
-// Import useAuth hook
-import { useAuth } from "./contexts/AuthContext";
 
 function App() {
   return (

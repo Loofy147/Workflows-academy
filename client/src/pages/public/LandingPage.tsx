@@ -1,11 +1,22 @@
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Brain, BarChart3, Users, Lock, Sparkles, CheckCircle2 } from "lucide-react";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
 import { useEffect, useState } from "react";
+
+// Navigation Button Component
+function NavigationButton({ href, children, ...props }: { href: string; children: React.ReactNode; [key: string]: any }) {
+  const [, navigate] = useLocation();
+  return (
+    <Button {...props} onClick={() => navigate(href)}>
+      {children}
+    </Button>
+  );
+}
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
+  const [, navigate] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -115,14 +126,10 @@ export default function LandingPage() {
             <a href="#testimonials" className="hover:text-cyan-400 transition">Testimonials</a>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/login">
-              <Button variant="ghost" size="sm">Sign In</Button>
-            </Link>
-            <Link href="/signup">
-              <Button size="sm" className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90">
-                Get Started
-              </Button>
-            </Link>
+            <NavigationButton href="/login" variant="ghost" size="sm">Sign In</NavigationButton>
+            <NavigationButton href="/signup" size="sm" className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90">
+              Get Started
+            </NavigationButton>
           </div>
         </div>
       </nav>
@@ -153,11 +160,9 @@ export default function LandingPage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/signup">
-                  <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90 w-full sm:w-auto">
-                    Start Free Trial <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </Link>
+                <NavigationButton href="/signup" size="lg" className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90 w-full sm:w-auto">
+                  Start Free Trial <ArrowRight className="ml-2 w-4 h-4" />
+                </NavigationButton>
                 <Button size="lg" variant="outline" className="border-slate-700 hover:bg-slate-800 w-full sm:w-auto">
                   Watch Demo
                 </Button>
@@ -301,7 +306,8 @@ export default function LandingPage() {
                   <span className="text-4xl font-bold">{tier.price}</span>
                   {tier.price !== "Custom" && <span className="text-slate-400">/month</span>}
                 </div>
-                <Button 
+                <NavigationButton 
+                  href="/signup"
                   className={`w-full mb-6 ${
                     tier.highlighted 
                       ? "bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90" 
@@ -310,7 +316,7 @@ export default function LandingPage() {
                   variant={tier.highlighted ? "default" : "outline"}
                 >
                   {tier.cta}
-                </Button>
+                </NavigationButton>
                 <div className="space-y-3">
                   {tier.features.map((feature, fidx) => (
                     <div key={fidx} className="flex items-center gap-3">
@@ -331,11 +337,9 @@ export default function LandingPage() {
           <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-cyan-500/30 rounded-2xl p-12 text-center">
             <h2 className="text-4xl font-bold mb-4">Ready to Transform Your Workflows?</h2>
             <p className="text-xl text-slate-400 mb-8">Join 1000+ teams automating with AgentFlow today</p>
-            <Link href="/signup">
-              <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90">
-                Start Your Free Trial <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
+            <NavigationButton href="/signup" size="lg" className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90">
+              Start Your Free Trial <ArrowRight className="ml-2 w-4 h-4" />
+            </NavigationButton>
           </div>
         </div>
       </section>
@@ -349,22 +353,22 @@ export default function LandingPage() {
                 <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-purple-500 rounded-lg"></div>
                 <span className="font-bold">AgentFlow</span>
               </div>
-              <p className="text-sm text-slate-400">AI-powered workflow automation for Africa</p>
+              <p className="text-sm text-slate-400">AI-powered workflow automation platform for Africa</p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li><a href="#" className="hover:text-cyan-400">Features</a></li>
-                <li><a href="#" className="hover:text-cyan-400">Pricing</a></li>
-                <li><a href="#" className="hover:text-cyan-400">Templates</a></li>
+                <li><a href="#features" className="hover:text-cyan-400">Features</a></li>
+                <li><a href="#pricing" className="hover:text-cyan-400">Pricing</a></li>
+                <li><a href="/docs" className="hover:text-cyan-400">Documentation</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li><a href="#" className="hover:text-cyan-400">About</a></li>
+                <li><a href="/about" className="hover:text-cyan-400">About</a></li>
                 <li><a href="#" className="hover:text-cyan-400">Blog</a></li>
-                <li><a href="#" className="hover:text-cyan-400">Careers</a></li>
+                <li><a href="#" className="hover:text-cyan-400">Contact</a></li>
               </ul>
             </div>
             <div>
@@ -372,12 +376,12 @@ export default function LandingPage() {
               <ul className="space-y-2 text-sm text-slate-400">
                 <li><a href="#" className="hover:text-cyan-400">Privacy</a></li>
                 <li><a href="#" className="hover:text-cyan-400">Terms</a></li>
-                <li><a href="#" className="hover:text-cyan-400">Contact</a></li>
+                <li><a href="#" className="hover:text-cyan-400">Security</a></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-slate-800 pt-8 text-center text-sm text-slate-400">
-            <p>&copy; 2026 AgentFlow. All rights reserved.</p>
+            <p>&copy; 2024 AgentFlow. All rights reserved.</p>
           </div>
         </div>
       </footer>
