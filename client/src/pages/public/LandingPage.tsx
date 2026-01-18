@@ -1,165 +1,214 @@
-import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap, Shield, Users, BarChart3, Workflow, Cpu, CheckCircle } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { ArrowRight, Zap, Brain, BarChart3, Users, Lock, Sparkles, CheckCircle2 } from "lucide-react";
+import { Link } from "wouter";
+import { useEffect, useState } from "react";
 
 export default function LandingPage() {
-  const [, navigate] = useLocation();
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const features = [
     {
-      icon: Workflow,
-      title: "Visual Workflow Builder",
-      description: "Drag-and-drop interface to create complex AI workflows without coding",
+      icon: Brain,
+      title: "AI-Powered Workflows",
+      description: "Create complex automation workflows using natural language with our intelligent workflow builder.",
+      color: "from-cyan-500 to-blue-500"
     },
     {
       icon: Zap,
-      title: "Real-time Execution",
-      description: "Execute workflows instantly with real-time monitoring and logging",
-    },
-    {
-      icon: Shield,
-      title: "Enterprise Security",
-      description: "Bank-level encryption, compliance certifications, and audit logs",
+      title: "Real-Time Execution",
+      description: "Monitor workflow execution in real-time with detailed logs, metrics, and instant error detection.",
+      color: "from-purple-500 to-pink-500"
     },
     {
       icon: BarChart3,
-      title: "Advanced Analytics",
-      description: "Track costs, success rates, and ROI for every workflow execution",
+      title: "Cost Analytics",
+      description: "Track spending trends, ROI calculations, and get AI-powered optimization recommendations.",
+      color: "from-emerald-500 to-cyan-500"
     },
     {
       icon: Users,
       title: "Team Collaboration",
-      description: "Share workflows, manage permissions, and collaborate in real-time",
+      description: "Build workflows together with real-time collaboration, presence indicators, and role-based access.",
+      color: "from-orange-500 to-red-500"
     },
     {
-      icon: Cpu,
-      title: "AI-Powered",
-      description: "Leverage multiple AI providers and LLMs in your workflows",
+      icon: Lock,
+      title: "Enterprise Security",
+      description: "Bank-level encryption, SOC 2 compliance, and comprehensive audit logs for complete peace of mind.",
+      color: "from-indigo-500 to-purple-500"
     },
+    {
+      icon: Sparkles,
+      title: "Template Marketplace",
+      description: "Access 100+ pre-built templates or monetize your own workflows with our creator marketplace.",
+      color: "from-yellow-500 to-orange-500"
+    }
   ];
 
   const testimonials = [
     {
-      name: "John Smith",
-      role: "CEO, TechCorp",
-      text: "AgentFlow reduced our document processing time by 80%. It's a game-changer.",
-      avatar: "👨‍💼",
+      name: "Ahmed Hassan",
+      role: "CEO, TechStart Algeria",
+      content: "AgentFlow transformed how we handle customer workflows. We reduced manual work by 80% in just 2 weeks.",
+      avatar: "AH"
     },
     {
-      name: "Sarah Johnson",
-      role: "Operations Manager, FinanceFlow",
-      text: "The cost estimation feature helped us optimize our workflow spending significantly.",
-      avatar: "👩‍💼",
+      name: "Fatima Benali",
+      role: "Operations Manager, E-Commerce Hub",
+      content: "The cost analytics dashboard helped us identify inefficiencies and cut our automation costs by 45%.",
+      avatar: "FB"
     },
     {
-      name: "Mike Chen",
-      role: "CTO, DataSystems",
-      text: "Building complex AI workflows has never been easier. Highly recommended!",
-      avatar: "👨‍💻",
-    },
+      name: "Karim Medjahed",
+      role: "CTO, Digital Solutions",
+      content: "The real-time collaboration features make it easy for our team to build and iterate on workflows together.",
+      avatar: "KM"
+    }
   ];
 
-  const stats = [
-    { label: "Active Users", value: "10K+" },
-    { label: "Workflows Created", value: "50K+" },
-    { label: "Executions/Month", value: "500K+" },
-    { label: "Uptime", value: "99.9%" },
+  const pricingTiers = [
+    {
+      name: "Starter",
+      price: "$49",
+      description: "Perfect for individuals and small teams",
+      features: ["Up to 5 workflows", "1,000 executions/month", "Basic analytics", "Email support"],
+      cta: "Get Started"
+    },
+    {
+      name: "Professional",
+      price: "$199",
+      description: "For growing teams and enterprises",
+      features: ["Unlimited workflows", "100,000 executions/month", "Advanced analytics", "Priority support", "Team collaboration"],
+      cta: "Start Free Trial",
+      highlighted: true
+    },
+    {
+      name: "Enterprise",
+      price: "Custom",
+      description: "For large-scale operations",
+      features: ["Everything in Professional", "Custom integrations", "Dedicated support", "SLA guarantee", "On-premise option"],
+      cta: "Contact Sales"
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-hidden">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-slate-800/50 border-b border-slate-700/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
-            AgentFlow
+      <nav className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+        <div className="container flex items-center justify-between h-16">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-purple-500 rounded-lg flex items-center justify-center font-bold text-sm">
+              AF
+            </div>
+            <span className="text-lg font-bold">AgentFlow</span>
           </div>
-          <div className="flex items-center gap-6">
-            <a href="#features" className="text-slate-300 hover:text-slate-100 transition-colors">
-              Features
-            </a>
-            <a href="#pricing" className="text-slate-300 hover:text-slate-100 transition-colors">
-              Pricing
-            </a>
-            <a href="#docs" className="text-slate-300 hover:text-slate-100 transition-colors">
-              Docs
-            </a>
-            <Button
-              onClick={() => navigate("/auth/login")}
-              variant="outline"
-              className="border-slate-600 text-slate-300"
-            >
-              Login
-            </Button>
-            <Button
-              onClick={() => navigate("/auth/signup")}
-              className="bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white border-0"
-            >
-              Sign Up
-            </Button>
+          <div className="hidden md:flex items-center gap-8">
+            <a href="#features" className="hover:text-cyan-400 transition">Features</a>
+            <a href="#pricing" className="hover:text-cyan-400 transition">Pricing</a>
+            <a href="#testimonials" className="hover:text-cyan-400 transition">Testimonials</a>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link href="/login">
+              <Button variant="ghost" size="sm">Sign In</Button>
+            </Link>
+            <Link href="/signup">
+              <Button size="sm" className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 via-transparent to-transparent" />
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
-              AI-Powered Workflows Made Simple
-            </h1>
-            <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-              Create, manage, and execute intelligent workflows without coding. Automate your business processes with AI agents.
-            </p>
-            <div className="flex gap-4 justify-center">
-              <Button
-                onClick={() => navigate("/auth/signup")}
-                className="bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white border-0 px-8 py-6 text-lg"
-              >
-                Get Started Free <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-              <Button
-                variant="outline"
-                className="border-slate-600 text-slate-300 px-8 py-6 text-lg"
-              >
-                Watch Demo
-              </Button>
-            </div>
-          </div>
+      <section className="relative pt-32 pb-20 px-4">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-y border-slate-700/50">
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-3xl font-bold text-cyan-300">{stat.value}</p>
-                <p className="text-slate-400">{stat.label}</p>
+        <div className="container relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <div className="inline-block px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full">
+                  <span className="text-sm text-cyan-400">✨ AI-Powered Workflow Automation</span>
+                </div>
+                <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+                  Automate Everything with{" "}
+                  <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    AI Intelligence
+                  </span>
+                </h1>
+                <p className="text-xl text-slate-400 leading-relaxed">
+                  Build, deploy, and monetize powerful AI workflows without coding. Trusted by 1000+ teams across Africa.
+                </p>
               </div>
-            ))}
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/signup">
+                  <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90 w-full sm:w-auto">
+                    Start Free Trial <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+                <Button size="lg" variant="outline" className="border-slate-700 hover:bg-slate-800 w-full sm:w-auto">
+                  Watch Demo
+                </Button>
+              </div>
+
+              <div className="flex items-center gap-6 pt-4">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 border-2 border-slate-950"></div>
+                  ))}
+                </div>
+                <p className="text-sm text-slate-400">
+                  <span className="font-semibold text-white">1,000+</span> teams automating workflows
+                </p>
+              </div>
+            </div>
+
+            <div className="relative h-96 md:h-full">
+              <img 
+                src="/images/hero-premium-banner.png" 
+                alt="AgentFlow Platform" 
+                className="w-full h-full object-cover rounded-2xl shadow-2xl"
+                style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+              />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-6 bg-slate-800/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4">Powerful Features</h2>
-          <p className="text-center text-slate-400 mb-12 max-w-2xl mx-auto">
-            Everything you need to build, deploy, and monetize AI workflows
-          </p>
+      <section id="features" className="py-20 px-4 relative">
+        <div className="container">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold">Powerful Features for Every Need</h2>
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+              Everything you need to build, deploy, and monetize intelligent workflows
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature) => {
+          <div className="grid md:grid-cols-3 gap-6">
+            {features.map((feature, idx) => {
               const Icon = feature.icon;
               return (
-                <div
-                  key={feature.title}
-                  className="p-6 rounded-lg bg-slate-800/50 border border-slate-700/50 hover:border-cyan-500/30 transition-all"
-                >
-                  <Icon className="w-12 h-12 text-cyan-400 mb-4" />
-                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                <Card key={idx} className="bg-slate-900/50 border-slate-800 hover:border-slate-700 transition p-6 group">
+                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${feature.color} p-3 mb-4 group-hover:scale-110 transition`}>
+                    <Icon className="w-full h-full text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
                   <p className="text-slate-400">{feature.description}</p>
-                </div>
+                </Card>
               );
             })}
           </div>
@@ -167,22 +216,30 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <section className="py-20 px-4 relative">
+        <div className="container">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold">How AgentFlow Works</h2>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6">
             {[
-              { step: 1, title: "Create", description: "Build workflows using our visual builder" },
-              { step: 2, title: "Configure", description: "Add AI agents and set parameters" },
-              { step: 3, title: "Execute", description: "Run workflows with real-time monitoring" },
-              { step: 4, title: "Monetize", description: "Publish and earn from your templates" },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">
-                  {item.step}
+              { num: "1", title: "Create", desc: "Use AI to design workflows in natural language" },
+              { num: "2", title: "Configure", desc: "Set up triggers, actions, and conditions" },
+              { num: "3", title: "Deploy", desc: "Launch your workflow with one click" },
+              { num: "4", title: "Monitor", desc: "Track execution and optimize performance" }
+            ].map((step, idx) => (
+              <div key={idx} className="relative">
+                <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-6 text-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-purple-500 rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">
+                    {step.num}
+                  </div>
+                  <h3 className="font-semibold mb-2">{step.title}</h3>
+                  <p className="text-sm text-slate-400">{step.desc}</p>
                 </div>
-                <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                <p className="text-slate-400">{item.description}</p>
+                {idx < 3 && (
+                  <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-0.5 bg-gradient-to-r from-cyan-500 to-purple-500"></div>
+                )}
               </div>
             ))}
           </div>
@@ -190,152 +247,137 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 px-6 bg-slate-800/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">What Users Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
-              <div
-                key={testimonial.name}
-                className="p-6 rounded-lg bg-slate-800/50 border border-slate-700/50"
-              >
+      <section id="testimonials" className="py-20 px-4 relative">
+        <div className="container relative z-10">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold">Loved by Teams Across Africa</h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, idx) => (
+              <Card key={idx} className="bg-slate-900/80 border-slate-800 backdrop-blur p-6">
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="text-4xl">{testimonial.avatar}</span>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 flex items-center justify-center font-bold">
+                    {testimonial.avatar}
+                  </div>
                   <div>
-                    <p className="font-bold">{testimonial.name}</p>
+                    <h4 className="font-semibold">{testimonial.name}</h4>
                     <p className="text-sm text-slate-400">{testimonial.role}</p>
                   </div>
                 </div>
-                <p className="text-slate-300 italic">"{testimonial.text}"</p>
-              </div>
+                <p className="text-slate-300">"{testimonial.content}"</p>
+                <div className="flex gap-1 mt-4">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-yellow-400">★</span>
+                  ))}
+                </div>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing Preview */}
-      <section id="pricing" className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">Simple Pricing</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Starter",
-                price: "Free",
-                features: ["Up to 10 workflows", "Basic templates", "Community support"],
-              },
-              {
-                name: "Professional",
-                price: "$99",
-                period: "/month",
-                features: [
-                  "Unlimited workflows",
-                  "Advanced templates",
-                  "Priority support",
-                  "Team collaboration",
-                  "Custom integrations",
-                ],
-                highlighted: true,
-              },
-              {
-                name: "Enterprise",
-                price: "Custom",
-                features: [
-                  "Everything in Pro",
-                  "Dedicated support",
-                  "Custom SLA",
-                  "White-label options",
-                  "Advanced security",
-                ],
-              },
-            ].map((plan) => (
-              <div
-                key={plan.name}
-                className={`p-8 rounded-lg border transition-all ${
-                  plan.highlighted
-                    ? "bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border-cyan-500/30 scale-105"
-                    : "bg-slate-800/50 border-slate-700/50"
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 px-4">
+        <div className="container">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold">Simple, Transparent Pricing</h2>
+            <p className="text-xl text-slate-400">Choose the plan that fits your needs</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {pricingTiers.map((tier, idx) => (
+              <Card 
+                key={idx} 
+                className={`p-8 transition transform hover:scale-105 ${
+                  tier.highlighted 
+                    ? "bg-gradient-to-b from-slate-800 to-slate-900 border-cyan-500/50 ring-2 ring-cyan-500/30" 
+                    : "bg-slate-900/50 border-slate-800"
                 }`}
               >
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <p className="text-3xl font-bold text-cyan-300 mb-6">
-                  {plan.price}
-                  {plan.period && <span className="text-lg text-slate-400">{plan.period}</span>}
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-emerald-400" />
-                      <span className="text-slate-300">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  className={`w-full ${
-                    plan.highlighted
-                      ? "bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white border-0"
-                      : "bg-slate-700/50 hover:bg-slate-700 text-slate-100 border-0"
+                <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
+                <p className="text-slate-400 mb-4">{tier.description}</p>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold">{tier.price}</span>
+                  {tier.price !== "Custom" && <span className="text-slate-400">/month</span>}
+                </div>
+                <Button 
+                  className={`w-full mb-6 ${
+                    tier.highlighted 
+                      ? "bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90" 
+                      : "border-slate-700 hover:bg-slate-800"
                   }`}
+                  variant={tier.highlighted ? "default" : "outline"}
                 >
-                  Get Started
+                  {tier.cta}
                 </Button>
-              </div>
+                <div className="space-y-3">
+                  {tier.features.map((feature, fidx) => (
+                    <div key={fidx} className="flex items-center gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-cyan-400" />
+                      <span className="text-sm">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border-y border-slate-700/50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Build Your First Workflow?</h2>
-          <p className="text-xl text-slate-300 mb-8">
-            Join thousands of users automating their business processes with AgentFlow
-          </p>
-          <Button
-            onClick={() => navigate("/auth/signup")}
-            className="bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white border-0 px-8 py-6 text-lg"
-          >
-            Start Free Today <ArrowRight className="w-5 h-5 ml-2" />
-          </Button>
+      <section className="py-20 px-4">
+        <div className="container">
+          <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-cyan-500/30 rounded-2xl p-12 text-center">
+            <h2 className="text-4xl font-bold mb-4">Ready to Transform Your Workflows?</h2>
+            <p className="text-xl text-slate-400 mb-8">Join 1000+ teams automating with AgentFlow today</p>
+            <Link href="/signup">
+              <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90">
+                Start Your Free Trial <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-800/50 border-t border-slate-700/50 py-12 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <footer className="border-t border-slate-800 py-12 px-4">
+        <div className="container">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="font-bold mb-4">AgentFlow</h3>
-              <p className="text-slate-400">AI-powered workflow automation platform</p>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-purple-500 rounded-lg"></div>
+                <span className="font-bold">AgentFlow</span>
+              </div>
+              <p className="text-sm text-slate-400">AI-powered workflow automation for Africa</p>
             </div>
             <div>
-              <h4 className="font-bold mb-4">Product</h4>
-              <ul className="space-y-2 text-slate-400">
-                <li><a href="#" className="hover:text-slate-100">Features</a></li>
-                <li><a href="#" className="hover:text-slate-100">Pricing</a></li>
-                <li><a href="#" className="hover:text-slate-100">Security</a></li>
+              <h4 className="font-semibold mb-4">Product</h4>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li><a href="#" className="hover:text-cyan-400">Features</a></li>
+                <li><a href="#" className="hover:text-cyan-400">Pricing</a></li>
+                <li><a href="#" className="hover:text-cyan-400">Templates</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-4">Company</h4>
-              <ul className="space-y-2 text-slate-400">
-                <li><a href="#" className="hover:text-slate-100">About</a></li>
-                <li><a href="#" className="hover:text-slate-100">Blog</a></li>
-                <li><a href="#" className="hover:text-slate-100">Contact</a></li>
+              <h4 className="font-semibold mb-4">Company</h4>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li><a href="#" className="hover:text-cyan-400">About</a></li>
+                <li><a href="#" className="hover:text-cyan-400">Blog</a></li>
+                <li><a href="#" className="hover:text-cyan-400">Careers</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-4">Legal</h4>
-              <ul className="space-y-2 text-slate-400">
-                <li><a href="#" className="hover:text-slate-100">Privacy</a></li>
-                <li><a href="#" className="hover:text-slate-100">Terms</a></li>
-                <li><a href="#" className="hover:text-slate-100">Cookies</a></li>
+              <h4 className="font-semibold mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li><a href="#" className="hover:text-cyan-400">Privacy</a></li>
+                <li><a href="#" className="hover:text-cyan-400">Terms</a></li>
+                <li><a href="#" className="hover:text-cyan-400">Contact</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-slate-700/50 pt-8 text-center text-slate-400">
-            <p>&copy; 2024 AgentFlow. All rights reserved.</p>
+          <div className="border-t border-slate-800 pt-8 text-center text-sm text-slate-400">
+            <p>&copy; 2026 AgentFlow. All rights reserved.</p>
           </div>
         </div>
       </footer>
